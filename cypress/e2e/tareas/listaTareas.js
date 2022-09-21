@@ -64,13 +64,19 @@ describe('Lista de Tareas - Test Suite', () => {
     //   porque cuando utilizamos herramientas que tipean muy rápido los frameworks
     //   no llegan a actualizar
     // - El wait rompe el linter, tuve que desactivarlo arriba de todo
+
     it('se puede crear una tarea, asignarla y cumplirla', () => {
       const descripcion = 'Correr tests e2e'
 
       crearTarea(descripcion)
+      // la primera vez que se levanta el backend el test rompe, la segunda vez funciona
+      // un workaround es forzar nuevamente la búsqueda, segunda forma de resolverlo es poner un bloqueo del server
+      cy.visit('/')
       // Hay que esperar!! para poder ver reflejado, no anda de otra manera
       cy.wait(200)
       //
+      
+      
       cy.get('tr').last().contains('td', descripcion)
 
       asignarTareaA(descripcion, "Nahuel Palumbo")
@@ -84,6 +90,9 @@ describe('Lista de Tareas - Test Suite', () => {
       cumplirTarea(descripcion)
       cy.wait(200)
       cy.get('tr').last().contains('td', '100,00')
+
+      // TODO: Probar de hacer directamente un pedido http de DELETE, ver network_requests.cy.js de los ejemplos
+
     })
 
     // Otra variante: utilizar Wiremock
