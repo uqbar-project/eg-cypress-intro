@@ -1,6 +1,9 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
 /// <reference types="cypress" />
 import { getByDataTestId } from "../utils"
+import { slowCypressDown } from 'cypress-slow-down'
+
+slowCypressDown(200)
 
 describe('Lista de Tareas - Test Suite', () => {
 
@@ -72,27 +75,24 @@ describe('Lista de Tareas - Test Suite', () => {
       // la primera vez que se levanta el backend el test rompe, la segunda vez funciona
       // un workaround es forzar nuevamente la búsqueda, segunda forma de resolverlo es poner un bloqueo del server
       cy.visit('/')
-      // Hay que esperar!! para poder ver reflejado, no anda de otra manera
-      cy.wait(200)
-      //
-      
-      
+      // Hay que esperar!! para poder ver reflejado, no anda si le sacamos el slow-down
+      // cy.wait(200)
       cy.get('tr').last().contains('td', descripcion)
 
       asignarTareaA(descripcion, "Nahuel Palumbo")
-      // un workaround al wait es forzar la recarga de la url
-      // pero eso ocurre automáticamente
-      // cy.visit('/')
-      cy.wait(200)
+      // cy.wait(200)
       getInputDescripcionDeTarea().type('Corr')
       cy.get('tr').last().contains('td', 'Nahuel Palumbo')
 
       cumplirTarea(descripcion)
-      cy.wait(200)
+      // cy.wait(200)
       cy.get('tr').last().contains('td', '100,00')
 
       // TODO: Probar de hacer directamente un pedido http de DELETE, ver network_requests.cy.js de los ejemplos
-
+      cy.request('delete', `http://localhost:9000/tareas/${descripcion}`)
+      .should((response) => {
+        expect(response.status).to.eq(200)
+      })
     })
 
     // Otra variante: utilizar Wiremock
