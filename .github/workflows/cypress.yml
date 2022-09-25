@@ -8,6 +8,10 @@ on:
     branches:
       - master
 
+env:
+  HOME: /app/.cache
+  CYPRESS_CACHE_FOLDER: /app/.cache
+
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
