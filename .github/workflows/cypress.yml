@@ -23,10 +23,11 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: '11'
-      - name: Install Dependencies
+      - name: Setup node
         uses: actions/setup-node@v3
         with:
           node-version: 16
+      - name: Install Dependencies
         # ci de npm: Clean install, no Continuous Integration
         run: |
           npm ci
