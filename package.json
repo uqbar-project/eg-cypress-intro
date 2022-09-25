@@ -2,12 +2,12 @@
   "name": "eg-cypress-intro",
   "version": "0.0.0",
   "scripts": {
-    "ci:build-angular": "(cd ./eg-angular && npm i && npm run build:ci)",
-    "ci:start-wiremock": "sh ./eg-wiremock/wiremock.sh",
+    "ci:build-angular": "(cd ./eg-angular && npm i && echo N | ng analytics off && ng build)",
+    "ci:start-wiremock": "cd ./eg-wiremock && sh ./wiremock.sh",
     "ci:start-angular": "angular-http-server --path ./eg-angular/dist/eg-tareas-angular -p 4200",
     "ci:start-server": "npm run ci:start-wiremock & npm run ci:start-angular",
     "cypress:run": "cypress run --headless --browser chrome",
-    "ci:test-cypress": "start-server-and-test ci:start-server http://localhost:4200 cypress:run",
+    "ci:test-cypress": "start-server-and-test ci:start-angular http://localhost:4200 cypress:run",
     "e2e": "cypress open",
     "lint": "eslint \"**/*.js\" ",
     "lint:fix": "eslint --fix \"**/*.js\" "
