@@ -47,9 +47,9 @@ describe('Lista de Tareas - Test Suite', () => {
     // - Expuesto a cambios (el backend es una memoria compartida, cualquiera puede cambiar el dato)
     //
     it('se puede traer una tarea', () => {
-      getInputDescripcionDeTarea().type('Im')
+      getInputDescripcionDeTarea().type('spr')
       
-      cy.contains('[data-testid="descripcion_0"]', 'Implementar single sign on desde la extranet')
+      cy.contains('[data-testid="descripcion_0"]', 'Integrar Wiremock con Springboot')
     })
     
     // - Segunda variante, hacemos un circuito feliz: creamos una tarea sin asignatario
