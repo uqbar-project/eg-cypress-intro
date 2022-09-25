@@ -42,6 +42,6 @@ jobs:
         with:
           mappings: 'eg-wiremock/mappings'
           files: 'eg-wiremock/__files'
-          command: 'npm run ci:cypress-run'
+          command: 'npm ci:cypress-run'
       - name: Get the WireMock standard output
         run: echo "${{ steps.setup-wiremock.outputs.wiremock-stdout }}"
