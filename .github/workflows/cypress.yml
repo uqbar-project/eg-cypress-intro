@@ -11,27 +11,29 @@ on:
 
 jobs:
   build_and_test:
-    runs-on: ubuntu-latest
-    container:
-      image: cypress/browsers:node18.6.0-chrome105-ff104
-      options: --user 1001
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Checkout submodules
         run: git submodule update --init --recursive
-      - name: Install Dependencies
-        # ci de npm: Clean install, no Continuous Integration
-        run: |
-          sudo npm i
-          sudo npm install -g @angular/cli
-      - name: Build Angular App
-        run: |
-          sudo npm run ci:build-angular
+      - name: Cypress run
+        uses: cypress-io/github-action@v4
       - name: Setup Java
         uses: actions/setup-java@v1
         with:
           java-version: '11'
+      - name: Install Dependencies
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+        # ci de npm: Clean install, no Continuous Integration
+        run: |
+          npm ci
+          npm install -g @angular/cli
+      - name: Build Angular App
+        run: |
+          sudo npm run ci:build-angular
       - name: Run Cypress Tests with Wiremock
         uses: williamhaw/setup-wiremock-action@v0.1.2
         id: setup-wiremock
