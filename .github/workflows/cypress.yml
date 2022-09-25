@@ -27,10 +27,12 @@ jobs:
           node-version: 16
       - name: Install Dependencies
         # ci de npm: Clean install, no Continuous Integration
+        working-directory: ./
         run: |
           npm i
           npm install -g @angular/cli
       - name: Build Angular App
+        working-directory: ./
         run: |
           npm run ci:build-angular
       - name: Run Cypress Tests with Wiremock
