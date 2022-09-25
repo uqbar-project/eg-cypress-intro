@@ -1,0 +1,39 @@
+name: Cypress + Angular + Wiremock Tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Checkout submodules
+        run: git submodule update --init --recursive
+      - name: Install Dependencies
+        # ci de npm: Clean install, no Continuous Integration
+        run: |
+          sudo npm ci
+          sudo npm install -g @angular/cli
+      - name: Build Angular App
+        run: |
+          sudo npm run ci:build-angular
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '8'
+      - name: Run Cypress Tests with Wiremock
+        uses: williamhaw/setup-wiremock-action@v0.1.2
+        id: setup-wiremock
+        with:
+          mappings: 'eg-wiremock/mappings'
+          files: 'eg-wiremock/__files'
+          command: 'npm run ci:cypress-run'
+      - name: Get the WireMock standard output
+        run: echo "${{ steps.setup-wiremock.outputs.wiremock-stdout }}"
