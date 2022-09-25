@@ -37,11 +37,4 @@ jobs:
           ls -la
           npm run ci:build-angular
       - name: Run Cypress Tests with Wiremock
-        uses: williamhaw/setup-wiremock-action@v0.1.2
-        id: setup-wiremock
-        with:
-          mappings: 'eg-wiremock/mappings'
-          files: 'eg-wiremock/__files'
-          command: 'npm run ci:test-cypress'
-      - name: Get the WireMock standard output
-        run: echo "${{ steps.setup-wiremock.outputs.wiremock-stdout }}"
+        run: npm run ci:test-cypress
