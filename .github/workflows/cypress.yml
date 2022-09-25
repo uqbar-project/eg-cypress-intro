@@ -17,8 +17,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Checkout submodules
         run: git submodule update --init --recursive
-      - name: Cypress run
-        uses: cypress-io/github-action@v4
       - name: Setup Java
         uses: actions/setup-java@v1
         with:
@@ -30,7 +28,7 @@ jobs:
       - name: Install Dependencies
         # ci de npm: Clean install, no Continuous Integration
         run: |
-          npm ci
+          npm i
           npm install -g @angular/cli
       - name: Build Angular App
         run: |
