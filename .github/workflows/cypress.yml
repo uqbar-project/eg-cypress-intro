@@ -8,13 +8,13 @@ on:
     branches:
       - master
 
-env:
-  HOME: /app/.cache
-  CYPRESS_CACHE_FOLDER: /app/.cache
 
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
+    container:
+      image: cypress/browsers:node18.6.0-chrome105-ff104
+      options: --user 1001
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
