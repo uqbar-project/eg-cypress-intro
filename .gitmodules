@@ -3,4 +3,4 @@
 	url = https://github.com/uqbar-project/eg-tareas-angular.git
 [submodule "eg-wiremock"]
 	path = eg-wiremock
-	url = https://github.com/uqbar-project/eg-tareas-wiremock
+	url = https://github.com/starg09/eg-tareas-wiremock.git
