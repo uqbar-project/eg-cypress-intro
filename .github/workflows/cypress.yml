@@ -34,6 +34,7 @@ jobs:
       - name: Build Angular App
         working-directory: ./
         run: |
+          ls -la
           npm run ci:build-angular
       - name: Run Cypress Tests with Wiremock
         uses: williamhaw/setup-wiremock-action@v0.1.2
