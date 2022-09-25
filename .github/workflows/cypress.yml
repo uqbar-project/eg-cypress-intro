@@ -32,7 +32,7 @@ jobs:
           npm install -g @angular/cli
       - name: Build Angular App
         run: |
-          sudo npm run ci:build-angular
+          npm run ci:build-angular
       - name: Run Cypress Tests with Wiremock
         uses: williamhaw/setup-wiremock-action@v0.1.2
         id: setup-wiremock
