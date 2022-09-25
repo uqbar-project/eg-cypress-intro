@@ -19,7 +19,7 @@ jobs:
       - name: Install Dependencies
         # ci de npm: Clean install, no Continuous Integration
         run: |
-          sudo npm ci
+          sudo npm i
           sudo npm install -g @angular/cli
       - name: Build Angular App
         run: |
@@ -27,7 +27,7 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v1
         with:
-          java-version: '8'
+          java-version: '11'
       - name: Run Cypress Tests with Wiremock
         uses: williamhaw/setup-wiremock-action@v0.1.2
         id: setup-wiremock
