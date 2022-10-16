@@ -3,14 +3,9 @@
 import { getByDataTestId } from "../utils"
 import { slowCypressDown } from 'cypress-slow-down'
 
-slowCypressDown(200)
+slowCypressDown(300)
 
 describe('Lista de Tareas - Test Suite', () => {
-
-  // Ejecuta antes de todos los tests
-  before(() => {
-    cy.visit('/')
-  })
 
   beforeEach(() => {
     cy.visit('/')
@@ -18,15 +13,14 @@ describe('Lista de Tareas - Test Suite', () => {
 
   const getInputDescripcionDeTarea = () => getByDataTestId('tareaBuscada')
   
+  // 
   const crearTarea = (descripcion) => {
     getByDataTestId('nueva-tarea').click()
     getByDataTestId('descripcion').type(descripcion)
+    // Podemos pausar la ejecución de los tests
+    // cy.pause()
     getByDataTestId('iteracion').type('Iteración 1')
-    // probar qué pasa con
-    // getByDataTestId('porcentajeCumplimiento').type('0')
     getByDataTestId('porcentaje-cumplimiento').type('0')
-    // TODO: no tiene efecto
-    // getByDataTestId('asignatario').type('Nahuel Palumbo')
     getByDataTestId('fecha').type('10/02/2020')
     getByDataTestId('guardar').click()
   }
@@ -49,11 +43,11 @@ describe('Lista de Tareas - Test Suite', () => {
     // - requiere levantar el backend
     // - Expuesto a cambios (el backend es una memoria compartida, cualquiera puede cambiar el dato)
     //
-    it('se puede traer una tarea', () => {
-      getInputDescripcionDeTarea().type('Im')
+    // it('se puede traer una tarea', () => {
+    //   getInputDescripcionDeTarea().type('Im')
       
-      cy.contains('[data-testid="descripcion_0"]', 'Implementar single sign on desde la extranet')
-    })
+    //   cy.contains('[data-testid="descripcion_0"]', 'Implementar single sign on desde la extranet')
+    // })
     
     // - Segunda variante, hacemos un circuito feliz: creamos una tarea sin asignatario
     // - luego la asignamos y por último la cumplimos
@@ -88,7 +82,6 @@ describe('Lista de Tareas - Test Suite', () => {
       // cy.wait(200)
       cy.get('tr').last().contains('td', '100,00')
 
-      // TODO: Probar de hacer directamente un pedido http de DELETE, ver network_requests.cy.js de los ejemplos
       cy.request('delete', `http://localhost:9000/tareas/${descripcion}`)
       .should((response) => {
         expect(response.status).to.eq(200)

@@ -1,17 +1,21 @@
+> **Nota:** en el archivo [e2e.js](./cypress/support/e2e.js) está configurado el tema claro para poder dar clase. Se puede comentar las líneas que llaman a la función `setLightTheme()` si querés que la barra de la izquierda se visualice en dark mode.
+
 # Clase de "Test End to End" con
 ![cypress_titulo](./readme_images/titulo.png)
 
-## Introduccion
-Ya conocemos los primeros dos tipos de tests:
- - **Test unitario:**  busca probar una pequeña funcionalidad específica y aislada.
-- **Test de integración:** busca probar la comunicación e interacción entre dos o más módulos del sistema.
+## Introducción
 
+Ya conocemos los primeros dos tipos de tests:
+
+- **Test unitario:**  busca probar una pequeña funcionalidad específica y aislada.
+- **Test de integración:** busca probar la comunicación e interacción entre dos o más módulos del sistema.
 
 La idea fundamental detrás de cualquier test que diseñemos consiste en establecer unas condiciones iniciales y verificar el cumplimiento de unas condiciones finales luego de realizar una cierta acción.
 
 ![errores_bugs](./readme_images/errors_bugs.png)
 
 ## Testeo end to end
+
 Los test **end to end** buscan testear la funcionalidad completa del sistema desde el punto de vista del usuario, simulando las acciones de entrada de más alto nivel ignorando prácticamente todos los detalles de implementación.
 
 Una forma de lograr este objetivo es realizar una ejecución manual, lo cual de más está decir es muy poco escalable y fiable, es por eso que para llevar a cabo las pruebas E2E existen frameworks y soluciones para automatizar esta tarea. 
@@ -19,6 +23,7 @@ Una forma de lograr este objetivo es realizar una ejecución manual, lo cual de 
 ![piramide_test](./readme_images/piramide_test.png)
 
 ## ¿Qué es Cypress?
+
 [Cypress](https://www.cypress.io/) es un framework en **Javascript** utilizado para automatizar pruebas sobre aplicaciones web. Para conseguirlo lo que hace es generar una instancia de un navegador y permite, de forma programática, interactuar con el propio html de la página para simular acciones humanas dentro de la aplicación.
 
 ## ¿Cómo empiezo?
@@ -77,6 +82,7 @@ Estas son las sentencias más habituales:
 - ```cy.get('input[class="nombre"]').clear()``` Nos permite limpiar el campo input cuya clase css sea “nombre” y ```cy.get('input[class="nombre"]').type('Algo 3')``` Nos permite escribir “Algo 3” en el campo.
 
 ## Selectores get y contains
+
 jQuery es una biblioteca para javascript que principalmente simplifica la forma de interactuar con el DOM. El estándar de cypress para obtener elementos del DOM es ```cy.get``` , que tiene una sintaxis similar a la empleada en jQuery.
 
 ### Ej 3: Vamos a buscar un vestido:
