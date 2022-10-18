@@ -1,0 +1,44 @@
+name: Cypress + Angular + Wiremock Tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: Checkout master on all submodules
+        run: |
+          git submodule foreach git checkout master
+          git submodule foreach git pull origin master
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install Dependencies
+        # ci de npm: Clean install, no Continuous Integration
+        working-directory: ./
+        run: |
+          npm i
+          npm install -g @angular/cli
+      - name: Build Angular App
+        working-directory: ./
+        run: |
+          ls -la
+          npm run ci:build-angular
+      - name: Run Cypress Tests with Wiremock
+        run: npm run ci:test-cypress

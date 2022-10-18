@@ -1,0 +1,6 @@
+[submodule "eg-angular"]
+	path = eg-angular
+	url = https://github.com/uqbar-project/eg-tareas-angular.git
+[submodule "eg-wiremock"]
+	path = eg-wiremock
+	url = https://github.com/uqbar-project/eg-tareas-wiremock

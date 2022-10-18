@@ -105,6 +105,8 @@ dist
 
 # Cypress
 **/cypress.env.json
+cypress/videos
+cypress/screenshots
 
 # MacOS
 .DS_Store

@@ -1,19 +1,18 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
 /// <reference types="cypress" />
-import { getByDataTestId } from "../utils"
+import { getByDataTestId } from '../utils'
 import { slowCypressDown } from 'cypress-slow-down'
 
 slowCypressDown(300)
 
 describe('Lista de Tareas - Test Suite', () => {
-
   beforeEach(() => {
     cy.visit('/')
   })
 
   const getInputDescripcionDeTarea = () => getByDataTestId('tareaBuscada')
-  
-  // 
+
+  //
   const crearTarea = (descripcion) => {
     getByDataTestId('nueva-tarea').click()
     getByDataTestId('descripcion').type(descripcion)
@@ -27,11 +26,10 @@ describe('Lista de Tareas - Test Suite', () => {
 
   const asignarTareaA = (descripcion, persona) => {
     cy.get('tr').last().find('#asignarModal').click()
-    
+
     // Debemos estar seguros de que existe el usuario que nos pasaron como parámetro
     getByDataTestId('asignatario').select(persona)
     getByDataTestId('guardar').click()
-
   }
 
   const cumplirTarea = (descripcion) => {
@@ -45,14 +43,14 @@ describe('Lista de Tareas - Test Suite', () => {
     //
     // it('se puede traer una tarea', () => {
     //   getInputDescripcionDeTarea().type('Im')
-      
+
     //   cy.contains('[data-testid="descripcion_0"]', 'Implementar single sign on desde la extranet')
     // })
-    
+
     // - Segunda variante, hacemos un circuito feliz: creamos una tarea sin asignatario
     // - luego la asignamos y por último la cumplimos
     // - El test prueba más cosas, pero está menos acoplado a los datos existentes
-    // 
+    //
     // Desventajas
     // - Termino creando un montón de tareas (el test tiene efecto!)
     // - Una forma de resolverlo fue creando un endpoint DELETE para dejar todo como estaba
@@ -73,7 +71,7 @@ describe('Lista de Tareas - Test Suite', () => {
       // cy.wait(200)
       cy.get('tr').last().contains('td', descripcion)
 
-      asignarTareaA(descripcion, "Nahuel Palumbo")
+      asignarTareaA(descripcion, 'Nahuel Palumbo')
       // cy.wait(200)
       getInputDescripcionDeTarea().type('Corr')
       cy.get('tr').last().contains('td', 'Nahuel Palumbo')
@@ -82,8 +80,10 @@ describe('Lista de Tareas - Test Suite', () => {
       // cy.wait(200)
       cy.get('tr').last().contains('td', '100,00')
 
-      cy.request('delete', `http://localhost:9000/tareas/${descripcion}`)
-      .should((response) => {
+      cy.request(
+        'delete',
+        `http://localhost:9000/tareas/${descripcion}`
+      ).should((response) => {
         expect(response.status).to.eq(200)
       })
     })
