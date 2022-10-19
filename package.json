@@ -6,7 +6,7 @@
     "ci:start-wiremock": "wiremock --port 9000 --root-dir ./eg-wiremock",
     "ci:start-angular": "angular-http-server --path ./eg-angular/dist/eg-tareas-angular -p 4200 --silent",
     "ci:start-server": "npm run ci:start-wiremock & npm run ci:start-angular",
-    "cypress:run": "cypress run --headless --browser chrome",
+    "cypress:run": "cypress run --headless --browser chrome --config-file ./cypress.config.js",
     "ci:test-cypress": "start-test ci:start-wiremock http://localhost:9000 ci:start-angular http://localhost:4200 cypress:run",
     "e2e": "cypress open",
     "lint": "eslint \"**/*.js\" ",
