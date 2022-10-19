@@ -10,7 +10,7 @@ module.exports = defineConfig({
     },
     baseUrl: 'http://localhost:4200/',
     // estamos filtrando los ejemplos que trae Cypress
-    excludeSpecPattern: '**/examples/**',
-    specPattern: 'cypress/e2e/**',
-  },
+    excludeSpecPattern: ['**/examples/**', '**/todoList/**'],
+    specPattern: 'cypress/e2e/**'
+  }
 })
