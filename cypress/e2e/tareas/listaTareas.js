@@ -32,6 +32,7 @@ describe('Lista de Tareas - Test Suite', () => {
     getByDataTestId('guardar').click()
   }
 
+  
   const cumplirTarea = (descripcion) => {
     cy.get('tr').last().find('#cumplirTarea').click()
   }
