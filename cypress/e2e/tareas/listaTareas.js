@@ -43,8 +43,8 @@ describe('Lista de Tareas - Test Suite', () => {
       // Creamos una nueva tarea
       getByDataTestId('nueva-tarea').click()
       getByDataTestId('descripcion').type(descripcionNuevaTarea)
-      getByDataTestId('iteracion').type('Iteración 8')
-      getByDataTestId('fecha').type('10/02/2021')
+      getByDataTestId('iteracion').type('Iteración 1')
+      getByDataTestId('fecha').type('10/02/2020')
       getByDataTestId('guardar').click()
 
       cy.wait(250)
