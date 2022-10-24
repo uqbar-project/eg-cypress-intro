@@ -1,41 +1,16 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
 /// <reference types="cypress" />
 import { getByDataTestId } from '../utils'
-import { slowCypressDown } from 'cypress-slow-down'
+// import { slowCypressDown } from 'cypress-slow-down'
 
-slowCypressDown(300)
+// para demorar la ejecución de cada comando de cypress un cierto tiempo
+// no conviene utilizarlo si no tenemos demoras
+// slowCypressDown(300)
 
 describe('Lista de Tareas - Test Suite', () => {
   beforeEach(() => {
     cy.visit('/')
   })
-
-  const getInputDescripcionDeTarea = () => getByDataTestId('tareaBuscada')
-
-  //
-  const crearTarea = (descripcion) => {
-    getByDataTestId('nueva-tarea').click()
-    getByDataTestId('descripcion').type(descripcion)
-    // Podemos pausar la ejecución de los tests
-    // cy.pause()
-    getByDataTestId('iteracion').type('Iteración 1')
-    getByDataTestId('porcentaje-cumplimiento').type('0')
-    getByDataTestId('fecha').type('10/02/2020')
-    getByDataTestId('guardar').click()
-  }
-
-  const asignarTareaA = (descripcion, persona) => {
-    cy.get('tr').last().find('#asignarModal').click()
-
-    // Debemos estar seguros de que existe el usuario que nos pasaron como parámetro
-    getByDataTestId('asignatario').select(persona)
-    getByDataTestId('guardar').click()
-  }
-
-  
-  const cumplirTarea = (descripcion) => {
-    cy.get('tr').last().find('#cumplirTarea').click()
-  }
 
   describe('En la página principal', () => {
     // - Este test es muy frágil,
@@ -62,33 +37,37 @@ describe('Lista de Tareas - Test Suite', () => {
     // - El wait rompe el linter, tuve que desactivarlo arriba de todo
 
     it('se puede crear una tarea, asignarla y cumplirla', () => {
-      const descripcion = 'Correr tests e2e'
+      const descripcionNuevaTarea = 'Aprender Cypress'
+      const personaAsignada = 'Nahuel Palumbo'
 
-      crearTarea(descripcion)
-      // la primera vez que se levanta el backend el test rompe, la segunda vez funciona
-      // un workaround es forzar nuevamente la búsqueda, segunda forma de resolverlo es poner un bloqueo del server
-      cy.visit('/')
-      // Hay que esperar!! para poder ver reflejado, no anda si le sacamos el slow-down
-      // cy.wait(200)
-      cy.get('tr').last().contains('td', descripcion)
+      // Creamos una nueva tarea
+      getByDataTestId('nueva-tarea').click()
+      getByDataTestId('descripcion').type(descripcionNuevaTarea)
+      getByDataTestId('iteracion').type('Iteración 8')
+      getByDataTestId('fecha').type('10/02/2021')
+      getByDataTestId('guardar').click()
 
-      asignarTareaA(descripcion, 'Nahuel Palumbo')
-      // cy.wait(200)
-      getInputDescripcionDeTarea().type('Corr')
-      cy.get('tr').last().contains('td', 'Nahuel Palumbo')
+      cy.wait(250)
+      cy.get('tr').last().as('ultimaFila')
+      cy.get('@ultimaFila').contains('td', descripcionNuevaTarea)
 
-      cumplirTarea(descripcion)
-      // cy.wait(200)
-      cy.get('tr').last().contains('td', '100,00')
+      // Asignamos la tarea
+      cy.get('@ultimaFila').find('#asignarModal').click()
+      getByDataTestId('asignatario').select(personaAsignada)
+      getByDataTestId('guardar').click()
 
+      getByDataTestId('tareaBuscada').type(descripcionNuevaTarea)
+      cy.get('@ultimaFila').contains('td', personaAsignada)
+
+      // Cumplimos la tarea
+      cy.get('@ultimaFila').find('#cumplirTarea').click()
+      cy.get('@ultimaFila').contains('td', '100,00')
+
+      // Eliminamos la tarea
       cy.request(
         'delete',
-        `http://localhost:9000/tareas/${descripcion}`
-      ).should((response) => {
-        expect(response.status).to.eq(200)
-      })
+        `http://localhost:9000/tareas/${descripcionNuevaTarea}`
+      ).should((response) => expect(response.status).to.eq(200))
     })
-
-    // Otra variante: utilizar Wiremock
   })
 })
