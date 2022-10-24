@@ -1,5 +1,8 @@
 > **Nota:** en el archivo [e2e.js](./cypress/support/e2e.js) está configurado el tema claro para poder dar clase. Se puede comentar las líneas que llaman a la función `setLightTheme()` si querés que la barra de la izquierda se visualice en dark mode.
 
+
+[![Cypress + Angular + Wiremock Tests](https://github.com/uqbar-project/eg-cypress-intro/actions/workflows/cypress.yml/badge.svg)](https://github.com/uqbar-project/eg-cypress-intro/actions/workflows/cypress.yml)
+
 # Clase de "Test End to End" con
 ![cypress_titulo](./readme_images/titulo.png)
 
