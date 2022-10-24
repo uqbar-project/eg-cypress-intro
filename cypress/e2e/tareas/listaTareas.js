@@ -37,7 +37,7 @@ describe('Lista de Tareas - Test Suite', () => {
     // - El wait rompe el linter, tuve que desactivarlo arriba de todo
 
     it('se puede crear una tarea, asignarla y cumplirla', () => {
-      const descripcionNuevaTarea = 'Aprender Cypress'
+      const descripcionNuevaTarea = 'Correr tests e2e'
       const personaAsignada = 'Nahuel Palumbo'
 
       // Creamos una nueva tarea
